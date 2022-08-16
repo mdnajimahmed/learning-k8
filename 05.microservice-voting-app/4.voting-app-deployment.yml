@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-app
+  namespace: default
+  labels:
+    app: voting-app
+spec:
+  selector:
+    matchLabels:
+      app: voting-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: voting-app
+    spec:
+      containers:
+        - name: voting-app
+          image: dockersamples/examplevotingapp_vote
+          resources:
+            requests:
+              cpu: 200m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 300Mi
+
+          ports:
+            - containerPort: 80
+              name: voting-app
+
+      restartPolicy: Always

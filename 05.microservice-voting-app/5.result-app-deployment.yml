@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result-app
+  namespace: default
+  labels:
+    app: result-app
+spec:
+  selector:
+    matchLabels:
+      app: result-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: result-app
+    spec:
+      containers:
+        - name: result-app
+          image: dockersamples/examplevotingapp_result
+          resources:
+            requests:
+              cpu: 200m
+              memory: 200Mi
+            limits:
+              cpu: 300m
+              memory: 300Mi
+
+          ports:
+            - containerPort: 80
+              name: result-app
+
+      restartPolicy: Always
