@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-first-rs
+  labels:
+    app: nginx
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          resources:
+            limits:
+              cpu: 200m
+              memory: 250Mi
+              ephemeral-storage: 2Gi
+            requests:
+              cpu: 100m
+              memory: 200Mi
+              ephemeral-storage: 1Gi
+          ports:
+            - name: web
+              containerPort: 80
+              protocol: TCP
