@@ -4,7 +4,7 @@
 - kubectl get rs
 - kubectl describe rs my-first-deployment-6854ccc9bf
 - kubectl get all
-
+- kubectl get all -A
 # Deployment/Rollout status
 
 - kubectl rollout status deployment my-first-deployment

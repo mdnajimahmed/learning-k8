@@ -1,0 +1,16 @@
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-first-resource-quota
+  namespace: dev
+spec:
+  hard:
+    requests.cpu: '1'
+    requests.memory: 128Mi
+    requests.storage: 5Gi
+    limits.cpu: '2'
+    limits.memory: 128Mi
+    pods: '2'
+    persistentvolumeclaims: '5'
+    

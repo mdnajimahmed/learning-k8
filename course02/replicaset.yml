@@ -1,0 +1,29 @@
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-first-replica-set
+  labels:
+    x: xxx
+    y: yyy
+spec:
+  replicas: 3
+  # `selector` needs to match template `labels` not metadata labels!!! VVI. Selector labels must a `subset` of template labels
+  selector:
+    matchLabels:
+      app: nginx
+      b: bbb
+  template:
+    metadata:
+      name: my-first-pod-inside-rs
+      labels:
+        app: nginx
+        b: bbb
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+          limits:
+            cpu: 100m
+            memory: 128Mi

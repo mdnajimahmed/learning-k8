@@ -1,0 +1,7 @@
+- kubectl get pods
+- kubectl get pods NAME_OF_THE_POD (find how many continers running in a POD => ready column 1/2 means this pod has 2 containers 1 of them is running)
+- kubectl run nginx --image=nginx (from 1.18 k8s will create pod instead o deployment)
+- kubectl describe pod NAME_OF_THE_POD
+- kubectl get pods -o wide
+- kubectl run redis --image=redis123 --dry-run=client -o yaml > pod-redis.yaml
+- kubectl edit pod redis (edit pod on the fly)
