@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  healthy
+  labels:
+    app:  healthy
+spec:
+  selector:
+    matchLabels:
+      app: healthy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  healthy
+    spec:
+      containers:
+      - name:  healthy
+        image:  ivplay4689/healthy
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+        envFrom:
+          - configMapRef: 
+              name: healthy-app-config
+        ports:
+          - containerPort:  80
+            name:  healthy
+      restartPolicy: Always

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-echoer
+  labels:
+    app: ubuntu-echoer
+spec:
+  containers:
+    - name: ubuntu-echoer
+      image: ivplay4689/ubuntu-echoer
+      args: ["Ehan Erwin"] #override Dockerfile CMD. verified.
+      # command: ["echo"] #override the entrypoint instruction.
+      resources:
+        limits: 
+          cpu: 100m
+          memory: 128Mi
+  restartPolicy: OnFailure

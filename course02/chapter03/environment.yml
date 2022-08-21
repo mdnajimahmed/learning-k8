@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "nginx"
+  labels:
+    app: "nginx"
+spec:
+  containers:
+  - name: nginx
+    image: "nginx:latest"
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    env:
+    - name: FROM_CONFIG_MAP
+      valueFrom:
+        configMapKeyRef:
+          name: MYAPP
+          key: DB_HOST
+    - name: FROM_STATIC
+      value: my-hard-coded-env-variable
+    - name: FROM_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: MYAPP
+          key: DB_HOST
+    

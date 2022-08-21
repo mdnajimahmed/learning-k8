@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  healthy
+  labels:
+    app:  healthy
+spec:
+  selector:
+    matchLabels:
+      app: healthy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  healthy
+    spec:
+      containers:
+      - name:  healthy
+        image:  ivplay4689/healthy
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+        env:
+        - name: DB_URL
+          value: jdbc:postgresql://192.168.0.100:5432/k8sdb
+        - name: DB_USERNAME
+          value: postgres 
+        - name: DB_PASSWORD
+          value: postgres
+        - name: DB_POOL_SIZE
+          value: "5"
+        ports:
+        - containerPort:  80
+          name:  healthy
+      restartPolicy: Always
