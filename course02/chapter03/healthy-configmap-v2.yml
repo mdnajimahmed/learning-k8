@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: healthy-app-config-v2
+data:
+  DB_URL: jdbc:postgresql://192.168.0.100:5432/k8sdb
+  DB_USERNAME: postgres
+  # removing db password , we will use it from secret
+  # DB_PASSWORD: postgres
+  DB_POOL_SIZE: "5"

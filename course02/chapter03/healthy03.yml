@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  healthy-with-secret
+  labels:
+    app:  healthy-with-secret
+spec:
+  selector:
+    matchLabels:
+      app: healthy-with-secret
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  healthy-with-secret
+    spec:
+      containers:
+      - name:  healthy-with-secret
+        image:  ivplay4689/healthy
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+        envFrom:
+          - configMapRef: 
+              name: healthy-app-config-v2
+          - secretRef:
+              name: healthy-app-secret
+        ports:
+          - containerPort:  80
+            name:  healthy
+      restartPolicy: Always
