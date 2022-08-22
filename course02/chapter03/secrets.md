@@ -8,4 +8,6 @@
 # VVI
 How to extract the secret in k8s
 - kubectl get secret healthy-app-secret -o yaml - output the yaml, it will give base64 encoded value of the secret
-- then use base64 decoding. echo -n <SECRET> | base64 --decode 
+- then use base64 decoding. echo -n <SECRET> | 
+
+- we can mount secret a file-system.
