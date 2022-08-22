@@ -11,7 +11,7 @@
     - Example: kubctl taint nodes node1 app=blue:NoSchedule
 - UseCase: I want to prevent app01 from running in amazon t3 instances.
 - Could not practice hands on because I am on minikube. (6 failed attempt to configure k8s cluster on vm)
-- kubectl describe node minikube | grep Taint - `How to see taint of a node`
+- ccccc - `How to see taint of a node`
 - Remove a taint: 
     - kubectl taint node node-name <COPY_THE_TAINT_YOU_WANT_TO_REMOVE>- `a minus symbol`
     - kubectl taint    kubctl taint nodes node1 app=blue:NoSchedule-

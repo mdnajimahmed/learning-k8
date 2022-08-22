@@ -1,0 +1,3 @@
+- label your node : kubectl label nodes <node-name> size=large
+- kubectl label node minikube-m03 size=large `label a node`
+- kubectl describe node minikube-m03 | grep -i -B10 large `check labels of a node`

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  nginx
+  namespace: default
+  labels:
+    app:  nginx
+spec:
+  # verified - all 3 pods placed in a node having the label! refer to node-selector.md
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app:  nginx
+    spec:
+      nodeSelector:
+        size: large
+      containers:
+      - name:  nginx
+        image:  nginx:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        
+        ports:
+        - containerPort:  80
+          name:  nginx
+        
+      restartPolicy: Always
