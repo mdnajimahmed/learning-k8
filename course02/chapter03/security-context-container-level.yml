@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "ubuntu-sec-ctx-2"
+  namespace: default
+  labels:
+    app: "ubuntu-sec-ctx-2"
+spec:
+  containers:
+  - name: ubuntu-sec-ctx-2
+    image: "ubuntu:latest"
+    command: ["sleep"]
+    args: ["500"]
+    securityContext:
+      runAsUser: 1001 # verified
+      capabilities:
+        add: ["MAC_ADMIN"]
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    ports:
+    - containerPort:  80
+      name:  http
+  restartPolicy: Always
