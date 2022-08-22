@@ -1,0 +1,17 @@
+- Taint means : I can tag my nodes with a certein taint. 
+- If a pod is not tolerant to that taint the pod can not go to that tainted node. if a pod is tolerant to the tanint, then it can / or cannot go the the tainted node.
+- Taints are set on node and tolerations are set on PODS. 
+- How to add taint to a node ? 
+    - kubectl taint    node node-name key=value:taint-effect 
+- Taint effect: 
+    - `taint-effect`  defines what happens to the PODs that DO NOT Tolerate the taint. Here are the types of taint-effect: 
+        - NoSchedule - New Pods will not be scheduled in the node, existing pods remains untouched
+        - PreferNoSchedule - Best effort
+        - No execute - New pods will not be scheduled while existing pods will be evicted as well.
+    - Example: kubctl taint nodes node1 app=blue:NoSchedule
+- UseCase: I want to prevent app01 from running in amazon t3 instances.
+- Could not practice hands on because I am on minikube. (6 failed attempt to configure k8s cluster on vm)
+- kubectl describe node minikube | grep Taint - `How to see taint of a node`
+- Remove a taint: 
+    - kubectl taint node node-name <COPY_THE_TAINT_YOU_WANT_TO_REMOVE>- `a minus symbol`
+    - kubectl taint    kubctl taint nodes node1 app=blue:NoSchedule-

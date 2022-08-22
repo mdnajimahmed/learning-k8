@@ -1,0 +1,29 @@
+# kubctl taint nodes node1 app=blue:NoSchedule 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "nginx"
+  namespace: default
+  labels:
+    app: "nginx"
+spec:
+  # define tolerations to enable placement for this pod in node1 that has taint [[[[ `kubctl taint nodes node1 app=blue:NoSchedule` ]]]
+  tolerations:
+    - key: app 
+      operator: "Equal"
+      value: "blue" 
+      effect: "NoSchedule"
+  containers:
+  - name: nginx
+    image: "nginx:latest"
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    ports:
+    - containerPort:  80
+      name:  http
+  restartPolicy: Always
