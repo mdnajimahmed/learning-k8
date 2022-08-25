@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  healthy-st-prb
+  namespace: default
+  labels:
+    app:  healthy-st-prb
+spec:
+  selector:
+    matchLabels:
+      app: healthy-st-prb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  healthy-st-prb
+    spec:
+      containers:
+      - name:  healthy-st-prb
+        image:  ivplay4689/healthy:97be06
+        env:
+          - name: DB_URL
+            value: jdbc:postgresql://192.168.0.100:5432/k8sdb
+          - name: DB_USERNAME
+            value: postgres 
+          - name: DB_PASSWORD
+            value: postgres
+          - name: DB_POOL_SIZE
+            value: "5"
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        startupProbe: # 2 min timeout
+          httpGet:
+            path: /
+            port: 80
+          failureThreshold: 24
+          periodSeconds: 5
+        ports:
+        - containerPort:  80
+          name:  healthy-st-prb
+
+      restartPolicy: Always
