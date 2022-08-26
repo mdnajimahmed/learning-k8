@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name:  ivplay4689-healthy
-        image:  ivplay4689/healthy:16d6d7
+        image:  ivplay4689/healthy:9ee6a3
         resources:
           requests:
             cpu: 500m
