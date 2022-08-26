@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  healthy-deployment
+  namespace: default
+  labels:
+    app: healthy-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ivplay4689_healthy
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25% # 2 at a time with 8 replicaset verified
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  ivplay4689_healthy
+    spec:
+      containers:
+      - name:  ivplay4689-healthy
+        image:  ivplay4689/healthy:16d6d7
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        startupProbe: # 2 min timeout
+          httpGet:
+            path: /
+            port: 80
+          failureThreshold: 24
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: 80
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        env:
+          - name: DB_URL
+            value: jdbc:postgresql://192.168.0.100:5432/k8sdb
+          - name: DB_USERNAME
+            value: postgres 
+          - name: DB_PASSWORD
+            value: postgres
+          - name: DB_POOL_SIZE
+            value: "5"
+          - name: PING_LOG
+            value: "1"
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+        ports:
+        - containerPort:  80
+          name:  healthy
+      restartPolicy: Always

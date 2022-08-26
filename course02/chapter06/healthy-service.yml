@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthy-service
+  namespace: default
+spec:
+  selector:
+    app: ivplay4689_healthy
+  type: ClusterIP
+  ports:
+  - name: healthy-service
+    protocol: TCP
+    port: 80
+    targetPort: 80
