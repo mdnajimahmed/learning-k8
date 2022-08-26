@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  healthy-lv-prb
+  namespace: default
+  labels:
+    app:  healthy-lv-prb
+spec:
+  selector:
+    matchLabels:
+      app: healthy-lv-prb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  healthy-lv-prb
+    spec:
+      containers:
+      - name:  healthy-lv-prb
+        image:  ivplay4689/healthy:8e6768
+        env:
+          - name: DB_URL
+            value: jdbc:postgresql://192.168.0.100:5432/k8sdb
+          - name: DB_USERNAME
+            value: postgres 
+          - name: DB_PASSWORD
+            value: postgres
+          - name: DB_POOL_SIZE
+            value: "5"
+          - name: PING_LOG
+            value: "1"
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        livenessProbe: # 2 min timeout
+          httpGet:
+            path: /live
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 3
+        ports:
+        - containerPort:  80
+          name:  healthy-lv-prb
+
+      restartPolicy: Always

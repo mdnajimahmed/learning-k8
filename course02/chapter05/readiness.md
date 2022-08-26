@@ -21,3 +21,14 @@
         - failureThreshold: default 3. after this the probe will stop.
     - TCP Test: tcpSocket(port)
     - Exec Command: exec -> command ["a","b"]
+- VVI: Liveness probe does not spin up new pod, it restarts the existing pod!!!
+- if container stops/crushes k8s automatically run another one, but what if container did not crush but the app hung! - liveness probe.
+
+# logging:
+- docker logs -f container_id
+- kubectl logs -f pod-name
+- in case multi container pod - kubectl logs -f pod-name container-name or kubectl logs -f pod-name -c container-name
+
+# enable metrics:
+- minikube : minikube addons enable metrics-server
+- kubectl create -f <METRIC SERVER GITHUB URL k8s spec>
