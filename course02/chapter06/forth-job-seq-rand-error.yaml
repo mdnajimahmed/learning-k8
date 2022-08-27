@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ubuntu-job04
+  namespace: default
+  labels:
+    app: ubuntu-job04
+spec:
+  completions: 3
+  parallelism: 1
+  template:
+    metadata:
+      name: ubuntu-job04
+      labels:
+        app: ubuntu-job04
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo starting;
+            exit_code=$(shuf -i 0-3 -n 1)
+            echo exiting with $exit_code
+            exit $exit_code
+      restartPolicy: Never

@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ubuntu-job01
+  namespace: default
+  labels:
+    app: ubuntu-job01
+spec:
+  template:
+    metadata:
+      name: ubuntu-job01
+      labels:
+        app: ubuntu-job01
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ['expr','3','+','2']
+      restartPolicy: Never

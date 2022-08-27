@@ -19,3 +19,9 @@
 - record the deployment history : `kubectl create -f deployment.yml --record`
 - kubectl create -f healthy-deployment.yml --record
 - interesting thing happened, at first my memory allocaion was 256Mi, but pods were crushing, from log , I understood that it's resource limit that is stopiping containers rom running. So i increased memory and all pod started
+
+# Job:
+- difference between pod/Deployment: 
+    - Deployments are meant to run forever, one pod goes down, replicaset will automatically spin-up another one.
+    - Jobs we run the same container n-times, sequentially(one after another) or parallely m out n at a time. once we get n - 0 exit codes, we are done runnin the job, pods will still be there to gather logs after jobs are done - cool thing.
+    - Watch cron job : `kubectl get cronjobs -w `

@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ubuntu-job03
+  namespace: default
+  labels:
+    app: ubuntu-job03
+spec:
+  completions: 5
+  parallelism: 2
+  template:
+    metadata:
+      name: ubuntu-job03
+      labels:
+        app: ubuntu-job03
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo starting;
+            sleep 5;
+            expr 2 + 4;
+            echo done;
+      restartPolicy: Never
