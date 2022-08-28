@@ -4,13 +4,13 @@ metadata:
   name: ingress-resource
   namespace: default
   annotations: 
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
     kubernetes.io/ingress.class:  nginx # this fucking this was missing!
 spec:
   rules:
     - http:
         paths:
-        - path: /
+        - path: /healthy(/|$)(.*)
           pathType: Prefix
           backend:
             service:
