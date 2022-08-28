@@ -6,3 +6,4 @@
 - service selector when updated, it appends with old tags! if selector tag is changed, better to do delete service and recreate!
 
 # Ingress
+- kubectl create ns ingress-space
