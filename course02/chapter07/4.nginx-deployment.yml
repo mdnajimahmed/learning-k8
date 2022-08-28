@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  nginx-with-ingress
+  namespace: default
+  labels:
+    app: nginx-with-ingress
+spec:
+  selector:
+    matchLabels:
+      app: nginx-test-app
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25% # 2 at a time with 8 replicaset verified
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: nginx-test-app
+    spec:
+      containers:
+      - name: nginx-test-app
+        image: nginx
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        startupProbe: # 2 min timeout
+          httpGet:
+            path: /
+            port: 80
+          failureThreshold: 24
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        ports:
+        - containerPort:  80
+          name:  nginx-test-app
+      restartPolicy: Always

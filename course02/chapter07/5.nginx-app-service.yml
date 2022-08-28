@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service-with-ingress
+  namespace: default
+spec:
+  selector:
+    app: nginx-test-app
+  type: ClusterIP
+  ports:
+  - name: nginx-service-with-ingress
+    protocol: TCP
+    port: 80
+    targetPort: 80

@@ -17,3 +17,13 @@ spec:
               name: healthy-service-with-ingress
               port:
                 number: 80
+    
+    - http:
+        paths:
+        - path: /nginx(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: nginx-service-with-ingress
+              port:
+                number: 80
