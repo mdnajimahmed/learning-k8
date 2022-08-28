@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: common-service
+  namespace: default
+spec:
+  selector:
+    service: common-service
+  type: ClusterIP
+  ports:
+  - name: healthy-again-app
+    protocol: TCP
+    port: 80 # mandatory - port in service , not host not inside pod ?? for some reason not working!
+    targetPort 80: # optional,if not provided takes port on service it-self 
+    # nodePort : # optional, if not provided assigns randomly 30000 - 32000 range.
+  - name: nginx-again-app
+    protocol: TCP
+    port: 8080 # mandatory - port in service , not host not inside pod
+    targetPort 80: # optional,if not provided takes port on service it-self 
