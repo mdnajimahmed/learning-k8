@@ -20,4 +20,8 @@
 - which pod is using a network selector?
     - kubectl get networkpolicy - will give (NAME,POD-SELECTOR,AGE) - get the label from pod selector column
     - `kubectl get pods --selector=app=ivplay4689_healthy` - assuming app=netpol appears in the previous query.
-    - `kubectl get pod -l app=ivplay4689_healthy` - filter by label
+    - `kubectl get pod -l app=ivplay4689_healthy` - filter by lab
+- The entities that a Pod can communicate with are identified through a combination of the following 3 identifiers:
+    - Other pods that are allowed (exception: a pod cannot block access to itself)
+    - Namespaces that are allowed
+    - IP blocks (exception: traffic to and from the node where a Pod is running is always allowed, regardless of the IP address of the Pod or the node)

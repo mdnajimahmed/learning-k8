@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: default
+  labels:
+    app: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name:  postgres
+        image:  postgres:14.5
+        resources:
+          requests:
+            cpu: 500m
+            memory: 500Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
+        env:
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: POSTGRES_USER
+          value: postgres
+        ports:
+        - containerPort:  5432
+          name:  postgres
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: default
+spec:
+  selector:
+    app: postgres
+  type: ClusterIP
+  ports:
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
