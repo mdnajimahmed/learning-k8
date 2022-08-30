@@ -52,3 +52,7 @@
     Name:   healthy-statefulset-0.healthy-headless-svc.default.svc.cluster.local
     Address: 10.244.120.92
     ```
+
+    # VVI : 
+    - in stateful set if we define volume in spec.template.spec.volume, then all pods point to the same PVC!!! - which may not be the desired use case all time! For example, in a mysql replication solution. We want a solution where each pod has its own pvc and hence its own PV, they can share the same SC however. We achieve this by using volumeClaimTemplate. instead of using spec.template.spec.volumes(which is same as pod template volume) we use spec.volumeClaimTemplate in the stateful set yaml.
+    - Stateful set does not automatically deletes a pvc when a pod dies, it only spins up that pod and binds it with the volume! - cool staff.
