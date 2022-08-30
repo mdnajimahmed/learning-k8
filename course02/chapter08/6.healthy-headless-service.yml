@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthy-headless-svc
+  namespace: default
+spec:
+  selector:
+    app: stateful-healthy-app
+  # type: ClusterIP
+  ports:
+  - name: healthy-app-port
+    protocol: TCP
+    port: 80
+  clusterIP: None

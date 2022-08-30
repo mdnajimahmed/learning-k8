@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: healthy-statefulset
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: stateful-healthy-app # has to match .spec.template.metadata.labels
+  serviceName: "healthy-headless-svc"
+  replicas: 3 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: stateful-healthy-app # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: healthy-sf
+        image: ivplay4689/healthy:9ee6a3
+        ports:
+        - containerPort: 80
+          name: web
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        startupProbe: # 2 min timeout
+          httpGet:
+            path: /
+            port: 80
+          failureThreshold: 24
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: 80
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+          timeoutSeconds: 2
+          successThreshold: 1
+          failureThreshold: 3
+          periodSeconds: 10
+        env:
+          - name: DB_URL
+            value: jdbc:postgresql://192.168.0.100:5432/postgres
+          - name: DB_USERNAME
+            value: postgres 
+          - name: DB_PASSWORD
+            value: postgres
+          - name: DB_POOL_SIZE
+            value: "5"
+          - name: PING_LOG
+            value: "1"
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: MY_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: MY_POD_IP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP

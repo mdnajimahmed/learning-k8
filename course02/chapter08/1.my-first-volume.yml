@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "alpine"
+  namespace: default
+  labels:
+    app: "alpine"
+spec:
+  containers:
+  - name: alpine
+    image: "alpine:latest"
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    volumeMounts:
+    - name: localtime
+      mountPath: /etc/localtime
+    - name: my-first-volume
+      mountPath: /opt
+    
+    command: ["/bin/sh", "-c"]
+    args:
+      - echo starting;
+        shuf -i 0-100 -n 1 >> /opt/number.out;
+        date;
+  volumes:
+    - name: localtime
+      hostPath:
+        path: /usr/share/zoneinfo/Asia/Shanghai
+    - name: my-first-volume
+      hostPath:
+        path: /data
+  restartPolicy: Never

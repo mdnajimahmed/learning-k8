@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Ki
+  # storageClassName: slow
+  # selector:
+  #   matchLabels:
+  #     release: "stable"
+  #   matchExpressions:
+  #     - {key: environment, operator: In, values: [dev]}

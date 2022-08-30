@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "ubuntu-probe"
+  namespace: default
+  labels:
+    app: "ubuntu-probe"
+spec:
+  containers:
+  - name: ubuntu-probe
+    image: "ubuntu:latest"
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    command: ["/bin/sh", "-c"]
+    args:
+      - echo starting;
+        apt-get update;
+        apt-get install dnsutils -y;
+        dig google.com;
+        nslookup google.com;
+        dig healthy-statefulset-0.healthy-headless-svc.default.svc.cluster.local;
+        nslookup healthy-statefulset-0.healthy-headless-svc.default.svc.cluster.local;
+        echo done;
+
+  restartPolicy: Never
