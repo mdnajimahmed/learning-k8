@@ -1,0 +1,16 @@
+# syntax
+syntax enable
+
+#clipboard
+set clipboard=unnamed
+
+# indent 
+filetype plugin indent on
+set autoindent smartindent 
+
+# tab 
+set tabstop=2 softtabstop=2 shiftwidth=2
+set expandtab 
+
+# ruler 
+set number ruler 

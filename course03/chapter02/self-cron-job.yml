@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: self-cron-job
+spec:
+  schedule: "*/1 * * * *"
+  failedJobsHistoryLimit: 5
+  successfulJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 3 # make sure that a job terminates within time.
+      template:
+        spec:
+          containers:
+          - name: ubuntu-cron
+            image: ubunt    
+            command: ["/bin/bash","-c"]
+            args:
+              - echo 'Hello Minutely Cron Job';
+                sleep 10;
+                echo 'I am done!';
+          restartPolicy: Never
+

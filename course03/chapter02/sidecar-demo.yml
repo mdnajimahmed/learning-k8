@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar
+spec:
+  containers:
+  - name: ubuntu-producer
+    image: ubuntu
+    volumeMounts:
+      - name: shared-folder
+        mountPath: /output
+    command: ["/bin/sh","-c"]
+    args:
+      - echo 'The writer wrote this' > /output/data.txt;
+        echo 'Finished writing...';
+        cat /output/data.txt;
+        sleep 120;
+  - name: ubuntu-consumer
+    image: ubuntu
+    volumeMounts:
+      - name: shared-folder
+        mountPath: /input
+    command: ["/bin/sh", "-c"]
+    args:
+      - sleep 10;
+       cat /input/data.txt;
+       sleep 110;
+  volumes:
+    - name: shared-folder
+      emptyDir: {}
+

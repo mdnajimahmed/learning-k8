@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-container
+  labels:
+    app: init-container
+spec:
+  containers:
+  - name: main
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo The app is running! && sleep 120']
+  initContainers:
+  - name: init-container
+    image: busybox:1.28
+    command: ['sh', '-c', "echo 'Initializing...Give me 10 seconds'; sleep 10;"]
+  restartPolicy: Never

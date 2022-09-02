@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-pod-test
+spec:
+  containers:
+  - name: busybox
+    image: busybox:stable
+    command: ["sh","-c","echo 'this is pv-pvc test.' > /pv-pvc-dir/pv-pvc.txt; cat /pv-pvc-dir/pv-pvc.txt; sleep 10; echo 'done'; "]
+    volumeMounts:
+      - name: pv-test
+        mountPath: /pv-pvc-dir
+  volumes:
+    - name: pv-test
+      persistentVolumeClaim:
+        claimName: pvc-hostpath
