@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: netpol-test-ns-a
+  labels:
+    team: ateam
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: netpol-test-ns-b
+  labels:
+    team: bteam
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: netpol-test-server
+  name: netpol-test-server
+  namespace: netpol-test-ns-a
+spec:
+  containers:
+  - image: nginx:stable
+    name: netpol-test-server
+    ports:
+      - containerPort: 80
+  restartPolicy: Always
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: netpol-test-client
+  name: netpol-test-client
+  namespace: netpol-test-ns-b
+spec:
+  containers:
+  - image: radial/busyboxplus:curl
+    name: netpol-test-client
+    command: ['sh','-c','while true; do echo "sleeping 30 seconds"; sleep 30; done']
+  restartPolicy: Always
+
+# kubectl -n netpol-test-ns-b exec netpol-test-client -- curl -m 2 $(kubectl -n netpol-test-ns-a get pod netpol-test-server --template '{{.status.podIP}}')

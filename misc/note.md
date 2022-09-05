@@ -1,0 +1,2 @@
+- `kubectl api-resources` - get the api documentation, could be handy.
+- 
