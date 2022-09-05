@@ -1,2 +1,2 @@
 - `kubectl api-resources` - get the api documentation, could be handy.
-- 
+- nc -z -v -w <TIMEOUT SECONDS> <SERVICE-NAME> <PORT>

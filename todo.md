@@ -1,3 +1,10 @@
 - headless service and stateful set more hands on with documentation.
 - course 02 lighning labs + exam simulation.
 - I can try alpha(buggy),beta(indented to go live), stable(live) in aws api gateway! like the idea.
+- Todo: Document reading
+    - PV
+    - PVC
+    - Storage Class
+- Pod placement.
+    - .spec.nodeName - to exactly say which pod to select.
+- annotation.
