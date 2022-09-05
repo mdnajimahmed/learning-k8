@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  k8s-challenge-2-a
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: k8s-challenge-2-a
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            memory: "64M"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: k8s-challenge-2-a
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 4444
+      targetPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod1
+  name: pod1
+  namespace: k8s-challenge-2-a
+spec:
+  containers:
+  - image: cosmintitei/bash-curl
+    name: pod1
+    command: ['sh','-c','sleep 1d']
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: k8s-challenge-2-b
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod2
+  name: pod2
+  namespace: k8s-challenge-2-b
+spec:
+  containers:
+  - image: cosmintitei/bash-curl
+    name: pod2
+    command: ['sh','-c','sleep 1d']
+
