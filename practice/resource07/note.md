@@ -22,3 +22,7 @@ kubectl -n  k8s-challenge-2-b exec pod2 -- curl  http://nginx-service.k8s-challe
 <ALSO WORKS>
 
 ```
+
+# Task 03: 
+- Todo: Study PV, PVC, Job, Cron Job in details.
+- Everything about job goes inside jobtemplate of a cron job (to be verified).

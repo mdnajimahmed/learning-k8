@@ -1,2 +1,3 @@
 - `kubectl api-resources` - get the api documentation, could be handy.
 - nc -z -v -w <TIMEOUT SECONDS> <SERVICE-NAME> <PORT>
+- `kubectl get pods --selector=job-name=pi` -  get pods under a job

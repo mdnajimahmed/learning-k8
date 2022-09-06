@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  storageClassName: mystorageclass
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/tmp/k8s-challenge-3"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 40Mi
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: my-cron-job
+spec:
+  schedule: "*/1 * * * *"
+  successfulJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      parallelism: 2
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox:stable
+            volumeMounts:
+              - mountPath: "/tmp/vol"
+                name: my-vol
+            command:
+            - /bin/sh
+            - -c
+            - cat /tmp/vol/storage
+            - hostname >> /tmp/vol/storage
+          volumes:
+            - name: my-vol
+              persistentVolumeClaim:
+                claimName: my-pvc
+          restartPolicy: OnFailure
+
