@@ -1,0 +1,64 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: nginx
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: default
+        podSelector:
+          matchLabels:
+            app: api
+      ports:
+        - protocol: TCP
+          port: 3333 # should be service port
+    - to:
+      - namespaceSelector:
+           matchLabels: 
+            kubernetes.io/metadata.name: kube-system
+        podSelector:
+           matchLabels:
+             k8s-app: kube-dns
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: test-network-policy-2
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: api
+  policyTypes:
+    - Egress
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: nginx
+      ports:
+        - protocol: TCP
+          port: 3333
+    
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 216.58.208.35/32
+    ports:
+      - port: 443
+        protocol: TCP
+  - to:
+    ports:
+      - port: 53
+        protocol: TCP
+      - port: 53
+        protocol: UDP

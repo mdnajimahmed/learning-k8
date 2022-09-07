@@ -40,3 +40,9 @@ kubectl -n  k8s-challenge-2-b exec pod2 -- curl  http://nginx-service.k8s-challe
 # Task 05:
 - kubectl exec -it mypod -- cat /tmp/secret1/password
 - kubectl create configmap drinks --from-file=drinks/ 
+
+# Task 06:
+- kubectl exec nginx-deployment-54c84d865-fq6kx -- nc -zv www.google.de 80
+- kubectl exec nginx-deployment-54c84d865-fq6kx -- nc -zv api-service 3333
+- kubectl exec api-deployment-645668c65c-pmbjp -- nc -zv www.google.de 80
+- kubectl exec api-deployment-645668c65c-pmbjp -- nc -zv api-service 3333
