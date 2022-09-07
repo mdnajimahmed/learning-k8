@@ -26,3 +26,17 @@ kubectl -n  k8s-challenge-2-b exec pod2 -- curl  http://nginx-service.k8s-challe
 # Task 03: 
 - Todo: Study PV, PVC, Job, Cron Job in details.
 - Everything about job goes inside jobtemplate of a cron job (to be verified).
+
+# Task 04:
+- VVI Namepsace changing is very common
+    - kubectl config set-context --current --namespace=one
+    - kubectl config view --minify | grep namespace
+    - kubectl create deployment my-deployment --image=nginx:1.14.2
+    - kubectl scale deployment my-deployment --replicas=3
+    - kubectl set image deployment my-deployment nginx=nginx:1.15.10 # deployments created by the command has the same container name and image name. We could also see the container name in the yaml outpout and use it this command.
+    - kubectl rollout history deployment my-deployment
+    - kubectl rollout undo deployment my-deployment
+
+# Task 05:
+- kubectl exec -it mypod -- cat /tmp/secret1/password
+- kubectl create configmap drinks --from-file=drinks/ 
