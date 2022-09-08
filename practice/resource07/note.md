@@ -46,3 +46,10 @@ kubectl -n  k8s-challenge-2-b exec pod2 -- curl  http://nginx-service.k8s-challe
 - kubectl exec nginx-deployment-54c84d865-fq6kx -- nc -zv api-service 3333
 - kubectl exec api-deployment-645668c65c-pmbjp -- nc -zv www.google.de 80
 - kubectl exec api-deployment-645668c65c-pmbjp -- nc -zv api-service 3333
+
+# Task 07:
+- kubectl create deployment compute --image=byrnedo/alpine-curl --dry-run=client -o yaml
+- kubectl create service externalname webapi --external-name www.google.com --dry-run=client -o yaml
+- kubectl exec compute-66c59cd477-wkwc5 -- ping webapi
+- kubectl exec compute-66c59cd477-wkwc5 -- curl webapi --header "Host: www.google.com"
+- kubectl exec compute-66c59cd477-wkwc5 -- curl webapi
