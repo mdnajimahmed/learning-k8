@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-calc
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - echo "important calculation"; sleep 1d
+    image: nginx
+    name: pod-calc
+
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: ex13
+  labels:
+    id: calc
+spec:
+  # modify replicas according to your case
+  replicas: 2
+  selector:
+    matchLabels:
+      id: calc
+  template:
+    metadata:
+      labels:
+        id: calc
+    spec:
+      containers:
+        - image: nginx
+          name: pod-calc
+          command:
+            - sh
+            - -c
+            - echo "important calculation"; sleep 1d
+      
