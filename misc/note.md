@@ -83,3 +83,55 @@
 - List all the pods sorted by *
     - kubectl get pods --sort-by=.metadata.name
     - kubectl get pods --sort-by=.metadata.creationTimestamp
+- Get the pods with label env=dev [VVI]
+    - kubectl get pods -l env=dev
+- Get the pods with label env [VVI]
+    - kubectl get pods -L env
+- Get the pods with labels env=dev and env=prod [VVI]
+    - kubectl get pods -l 'env in (dev,prod)'
+- Change the label for one of the pod to env=uat and list all the pods to verify [VVI]
+    - kubectl label pod/nginx-dev3 env=uat --overwrite
+    - kubectl get pods --show-labels
+- Remove the labels for the pods that we created now and verify all the labels are removed [VVI]
+   - kubectl label pod nginx-dev{1..3} env-
+   - kubectl label pod nginx-prod{1..2} env-
+   - kubectl label pod d-dev-6cbbcc9d6f-{j7vkm,jpmgs} env-
+- We can also label nodes!!!
+    - kubectl get nodes --show-labels
+    - kubectl label node minikube nodeName=nginxnode
+- [VVI] Label a node and then deploy a pod in that node
+    - minikube start --nodes 2
+    - kubectl get nodes
+    - kubectl label node minikube-m02 ec2=m4large
+    - use the label in the nodeSelector in the pod spec.
+- Annotate the pods with name=webapp
+    - kubectl annotate pod nginx name=webapp
+    - kubectl annotate pod nginx name=webapp2 --overwrite
+    - kubectl annotate pod nginx name-
+- Remove all the pods that we created so far
+    - kubectl delete po --all
+- Get the deployment rollout status
+    - kubectl rollout status deploy webapp
+- kubectl set image deploy/nginx nginx=nginx:1.17.4
+- kubectl rollout undo deploy nginx
+- kubectl describe deploy nginx | grep Image
+- kubectl rollout status deploy nginx
+- kubectl rollout history deploy nginx
+- kubectl rollout undo deploy nginx --to-revision=3
+- Get the pods of this deployment
+- kubectl scale deploy webapp --replicas=20
+- kubectl set image deployment webapp nginx=nginx:1.17.1 # creates a new revision.
+- kubectl rollout history deployment webapp --revision=6
+- [VVI] pause deployment, update image, resume deployment
+    - kubectl rollout pause deploy webapp
+    - kubectl set image deploy/webapp nginx=nginx:latest
+    - kubectl rollout resume deploy webapp
+- kubectl autoscale deploy webapp --min=1 --max=2 --cpu-percent=85  # deleted 1 pod because previously it was 2.
+- kubectl get hpa
+- kubectl get pod -l app=webapp
+- kubectl create job node --image node -- node -v 
+- [VVI] watch job completion
+    - kubectl get job -w
+    - 
+
+- [VVI] study : kubernetes workloads in details(job, cron job etc)

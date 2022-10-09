@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  nodeSelector:
+    ec2: m4large
+  containers:
+  - image: nginx
+    name: nginx
+    ports:
+      - containerPort: 80
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always

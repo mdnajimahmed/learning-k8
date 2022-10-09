@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: busybox
+spec:
+  completions: 5
+  parallelism: 2
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - echo
+        - Hello I am from Job;
+        - sleep 10;
+
+        image: busybox
+        name: busybox
+        resources: {}
+      restartPolicy: Never
+status: {}

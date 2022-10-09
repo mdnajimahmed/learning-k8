@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: date-job
+spec:
+  jobTemplate:
+    metadata:
+      name: date-job
+    spec:
+      completions: 5
+      parallelism: 2
+      template:
+        metadata:
+        spec:
+          containers:
+          - command:
+            - /bin/sh
+            - -c
+            - date;echo hello from k8s cluster
+            image: busybox
+            name: date-job
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
