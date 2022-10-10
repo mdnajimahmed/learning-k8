@@ -7,8 +7,8 @@ spec:
     metadata:
       name: date-job
     spec:
-      completions: 5
-      parallelism: 2
+      # completions: 5 # every trigger(every minute) runs 5 jobs 2 in parallel!
+      # parallelism: 2 
       template:
         metadata:
         spec:
