@@ -146,3 +146,6 @@
 - List all the events sorted by timestamp and put them into file.log and verify
     - kubectl get events --sort-by=.metadata.creationTimestamp
 - kubectl set image pod/not-running not-running=nginx # CONTAINER_NAME=IMAGE_NAME
+- kubectl run my-nginx --image=nginx --port=80 --dry-run=client -o yaml -l app=my-nginx
+- kubectl run tmp --image=busybox --rm -it --restart=Never -- /bin/sh -c wget http://my-nginx:9376
+- kubectl run ubuntu --image=ubuntu -- /bin/bash -c "sleep 3600"
