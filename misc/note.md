@@ -135,3 +135,14 @@
     - 
 
 - [VVI] study : kubernetes workloads in details(job, cron job etc)
+- kubectl get cm myconfigmap -o yaml
+- kubectl create cm myconfigmap --from-literal=appname=myapp
+- kubectl create cm cmfile --from-file=data.txt # sucs, dont use it!
+- kubectl create cm cmfile --from-env-file=data.txt
+- kubectl create secret generic my-secret --from-literal=username=user --from-literal=password=mypassword # use the same --from-literal twice
+- Check what all are the options that we can configure with readiness and liveness probes
+    - kubectl explain Pod.spec.containers.livenessProbe
+    - kubectl explain Pod.spec.containers.readinessProbe
+- List all the events sorted by timestamp and put them into file.log and verify
+    - kubectl get events --sort-by=.metadata.creationTimestamp
+- kubectl set image pod/not-running not-running=nginx # CONTAINER_NAME=IMAGE_NAME
