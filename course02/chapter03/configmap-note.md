@@ -1,4 +1,5 @@
 - kubectl create configMap CONFIG_MAP_NAME --from-literal=APP_COLOR=blue --from-literal=APP_ENV=prod
 - kubectl create configMap CONFIG_MAP_NAME --from-file=app_config.properties
+- kubectl create configMap CONFIG_MAP_NAME --from-env-file=app_config.txt
 - kubectl get configmap
-- VVI: read spec in the console during exam - `kubectl explain pods --recursive | grep envFrom`
+- VVI: read spec in the console during exam - `kubectl explain pods --recursive | grep envFrom` # better use the official doc.

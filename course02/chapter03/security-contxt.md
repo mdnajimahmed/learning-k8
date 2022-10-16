@@ -6,7 +6,7 @@ USER 1000
 ```
 - change capabilities of the docker user inside docker container - 
     - Add a Linux capability `docker run --cap-add MAC_ADMIN ubuntu`
-    - Remve a Linux capability `docker run --cap-drop MAC_ADMIN ubuntu`
+    - Remove a Linux capability `docker run --cap-drop MAC_ADMIN ubuntu`
     - Add all linux capabilities `docker run --previlleged MAC_ADMIN ubuntu`
 
 - We can define security context at a POD level or container level in pod.yml file. If we configure the security at the k8s pod level, then all the settings will be applied to all the container in the pod. 

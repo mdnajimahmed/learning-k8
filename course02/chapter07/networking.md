@@ -13,7 +13,7 @@
 - `kubectl exec healthy-with-ingress-565b57d45c-d8svj -- curl http://localhost` - invoking curl::localhost in healthy pod
 - `kubectl exec healthy-with-ingress-565b57d45c-d8svj -- curl http://172.17.0.5` - invoking curl::localhost in healthy pod
 - if there is a dash in the spec.ingress.from:  that means or, otherwise it means and. - wow! VVI.
-- if something is allowed by ingress, then the traffic will also go out using the same port(like security group stateless, unline NACL which is stateful)
+- if something is allowed by ingress, then the traffic will also go out using the same port(like security group stateless, unlike NACL which is stateful)
 
 # Network policy:
 - get all network policy - `kubectl get networkpolicy`

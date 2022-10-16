@@ -10,8 +10,8 @@
         - No execute - New pods will not be scheduled while existing pods will be evicted as well.
     - Example: kubctl taint nodes node1 app=blue:NoSchedule
 - UseCase: I want to prevent app01 from running in amazon t3 instances.
-- Could not practice hands on because I am on minikube. (6 failed attempt to configure k8s cluster on vm)
+- Could not practice hands on because I am on minikube. (6 failed attempt to configure k8s cluster on vm) 
 - ccccc - `How to see taint of a node`
 - Remove a taint: 
     - kubectl taint node node-name <COPY_THE_TAINT_YOU_WANT_TO_REMOVE>- `a minus symbol`
-    - kubectl taint    kubctl taint nodes node1 app=blue:NoSchedule-
+    - kubectl taint nodes node1 app=blue:NoSchedule-

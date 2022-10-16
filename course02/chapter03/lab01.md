@@ -1,2 +1,2 @@
-- kubeadm token create --print-join-command
-- minikube start --nodes 3 
+<!-- - kubeadm token create --print-join-command
+- minikube start --nodes 3  -->

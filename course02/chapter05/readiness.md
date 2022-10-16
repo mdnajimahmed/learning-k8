@@ -27,8 +27,9 @@
 # logging:
 - docker logs -f container_id
 - kubectl logs -f pod-name
-- in case multi container pod - kubectl logs -f pod-name container-name or kubectl logs -f pod-name -c container-name
+- in case multi container pod - kubectl logs -f pod-name container-name or *kubectl logs -f pod-name -c container-name # the better column* 
 
 # enable metrics:
-- minikube : minikube addons enable metrics-server
-- kubectl create -f <METRIC SERVER GITHUB URL k8s spec>
+- minikube addons list | grep metrics-server # Verify that 'metrics-server' addon is enabled:
+- minikube addons enable metrics-server  # Enable metrics-server addon (if disabled):
+- kubectl get pods --namespace kube-system | grep metrics-server # Verify that 'metrics-server' pod is running
