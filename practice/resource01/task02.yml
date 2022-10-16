@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: mpbb
+  name: mpbb
+spec:
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - echo hello; sleep 3600
+    image: busybox
+    name: mpbb01
+  - args:
+    - /bin/sh
+    - -c
+    - echo hello; sleep 3600
+    image: busybox
+    name: mpbb02
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never

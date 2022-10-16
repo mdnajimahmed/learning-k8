@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ngcm3
+  name: ngcm3
+spec:
+  containers:
+  - image: nginx
+    name: ngcm3
+    volumeMounts:
+      - name: config-volume
+        mountPath: /etc/lala
+  volumes:
+    - name: config-volume
+      configMap:
+        name: cmvolume
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always

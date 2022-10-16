@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ngcm2
+  name: ngcm2
+spec:
+  containers:
+  - image: nginx
+    name: ngcm2
+    envFrom:
+      - configMapRef:
+          name: anotherone
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
