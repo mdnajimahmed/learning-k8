@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: bb1
+  name: bb1
+spec:
+  containers:
+  - args:
+    - sleep
+    - "300"
+    image: busybox
+    name: bb1
+    envFrom:
+      - configMapRef:
+          name: cmfl
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bb3
+spec:
+  containers:
+    - name: bb3
+      image: busybox
+      command: [ "/bin/sh", "-c", "sleep 300" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: cmfl
+        items:
+        - key: "key1"
+          path: key1
+  restartPolicy: Never
