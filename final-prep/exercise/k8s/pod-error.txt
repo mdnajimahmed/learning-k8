@@ -1,0 +1,9 @@
+Events:
+  Type     Reason     Age                   From               Message
+  ----     ------     ----                  ----               -------
+  Normal   Scheduled  3m31s                 default-scheduler  Successfully assigned default/nginx to minikube-m02
+  Normal   Pulling    103s (x4 over 3m30s)  kubelet            Pulling image "nginx:2.3.5"
+  Warning  Failed     99s (x4 over 3m25s)   kubelet            Failed to pull image "nginx:2.3.5": rpc error: code = Unknown desc = Error response from daemon: manifest for nginx:2.3.5 not found: manifest unknown: manifest unknown
+  Warning  Failed     99s (x4 over 3m25s)   kubelet            Error: ErrImagePull
+  Warning  Failed     84s (x6 over 3m24s)   kubelet            Error: ImagePullBackOff
+  Normal   BackOff    72s (x7 over 3m24s)   kubelet            Back-off pulling image "nginx:2.3.5"
