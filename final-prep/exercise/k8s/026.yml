@@ -24,4 +24,6 @@ spec:
           restartPolicy: OnFailure
   schedule: '*/1 * * * *'
   startingDeadlineSeconds: 17
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 10
 status: {}
