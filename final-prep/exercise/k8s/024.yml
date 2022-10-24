@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: jobwith5tasks
+spec:
+  completions: 5
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - sleep
+        - "3"
+        image: busybox
+        name: jobwith5tasks
+        resources: {}
+      restartPolicy: Never
+status: {}
