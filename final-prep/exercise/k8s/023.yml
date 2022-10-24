@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: timedjob
+spec:
+  activeDeadlineSeconds: 30
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - command:
+        - sleep
+        - "40"
+        image: busybox
+        name: timedjob
+        resources: {}
+      restartPolicy: Never
+status: {}
