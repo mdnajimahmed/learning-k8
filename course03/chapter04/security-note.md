@@ -14,7 +14,7 @@
 - Authorization happens using RBAC
 
 # Admission Controller: (Basically an interceptor)
-Admission controller intercept requests to the Kubernetes API after the authentication and authorization but before any objects are persisted. They can be used to validate,deny or event modify the request! 
+Admission controller intercept requests to the Kubernetes API after the authentication and authorization but before any objects are persisted. They can be used to validate,deny or even modify the request! 
 - enable auto create namespace in the cluster
     - sudo vi sudo cat /etc/kubernetes/manifests/kube-apiserver.yaml 
     - --enable-admission-plugins=NamespaceAutoProvision (Add this separated by comma this this flag)

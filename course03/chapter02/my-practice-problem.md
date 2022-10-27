@@ -6,5 +6,5 @@ I was able to solve the challenge!
 - Had to look for cron reference in google.
 - active deadline seconds : max time allowed for the job to run  (activeDeadlineSeconds)
 
-- The restartPolicy for jobs and cron jobs must be set to never or onFailure. not Always.
-- Why multi container pods? because i want them to share resources(network and volume)
+- The restartPolicy for jobs and cron jobs must be set to never or onFailure. not Always. if set to Always API will throw an error.
+- Why multi container pods? because i want them to share resources(network and volume) `clear now, silly question.`
