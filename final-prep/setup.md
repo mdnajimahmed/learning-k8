@@ -14,5 +14,6 @@
 - kubectl get pods --namespace kube-system | grep metrics-server # Verify that 'metrics-server' pod is running
 
 # Trying with calico as per the official doc:
+- minikube delete --all 
 - minikube start --nodes 2 --network-plugin=cni --cni calico `https://projectcalico.docs.tigera.io/getting-started/kubernetes/minikube`
 - kubectl get pods -l k8s-app=calico-node -o wide -A -w `make sure they are in running state and there is no abnormality in restart count`
