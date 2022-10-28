@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: cricket
+  name: cricket
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cricket
+  template:
+    metadata:
+      labels:
+        app: cricket
+    spec:
+      volumes:
+      - name: workdir
+        emptyDir: {}
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: workdir
+          mountPath: /usr/share/nginx/html
+      initContainers:
+      - name: init-cricket
+        image: busybox
+        command: ['sh', '-c', echo "Hello from $HOSTNAME" > /usr/share/nginx/html/index.html]
+        volumeMounts:
+        - name: workdir
+          mountPath: /usr/share/nginx/html
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: cricket
+  name: cricket
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: cricket
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: football
+  name: football
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: football
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: football
+    spec:
+      volumes:
+      - name: workdir
+        emptyDir: {}
+      containers:
+      - image: nginx
+        name: nginx
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - name: workdir
+          mountPath: /usr/share/nginx/html
+      initContainers:
+      - name: init-cricket
+        image: busybox
+        command: ['sh', '-c', echo "Hello from $HOSTNAME" > /usr/share/nginx/html/index.html]
+        volumeMounts:
+        - name: workdir
+          mountPath: /usr/share/nginx/html
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: football
+  name: football
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: football
+status:
+  loadBalancer: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservice
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    # kubernetes.io/ingress.class:  nginx
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /cricket(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: cricket
+            port:
+              number: 80
+      - path: /football(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: football
+            port:
+              number: 80
