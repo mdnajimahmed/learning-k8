@@ -15,7 +15,7 @@ set clipboard=unnamed
 
 # indent
 filetype plugin indent on
-set smartindent autoindent
+set autoindent smartindent 
 
 # tab
 set expandtab

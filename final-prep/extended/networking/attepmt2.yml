@@ -1,0 +1,157 @@
+# Create ns-a,ns-b, create a nginx pod in ns-a with label tag:target
+# any pod with label tag: allowed-all, from any namespace should be able to talk to our nginx pod located in ns-a
+# any pod with label tag: allowed-ns, from ns-b namespace should be able to talk to our nginx pod located in ns-a
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-a
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ns-b
+---
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: np1
+#   namespace: ns-a
+# spec:
+#   podSelector:
+#     matchLabels:
+#       tag: target
+#   policyTypes:
+#     - Ingress
+#   ingress:
+#     - from:
+#         - namespaceSelector:
+#             matchLabels:
+#               kubernetes.io/metadata.name: ns-b
+#           podSelector:
+#             matchLabels:
+#               tag: allowed-ns
+#         - podSelector:
+#             matchLabels:
+#               tag: allowed-all
+---
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: np1
+#   namespace: ns-a
+# spec:
+#   podSelector:
+#     matchLabels:
+#       tag: target
+#   policyTypes:
+#     - Ingress
+#   ingress:
+#     - from:
+#         - namespaceSelector:
+#             matchLabels:
+#               kubernetes.io/metadata.name: ns-b
+#           podSelector:
+#             matchLabels:
+#               tag: allowed-ns
+#     - from: 
+#         - podSelector:
+#             matchLabels:
+#               tag: allowed-all
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np1
+  namespace: ns-a
+spec:
+  podSelector:
+    matchLabels:
+      tag: target
+  policyTypes:
+    - Ingress
+  ingress:
+    - from: 
+        - podSelector:
+            matchLabels:
+              tag: allowed-all
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    tag: target
+  name: nginx
+  namespace: ns-a
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    ports:
+    - containerPort: 80
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    tag: allowed-ns
+  name: busybox-allowed-ns
+  namespace: ns-b
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    args: ["sleep", "3600"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    tag: allowed-ns
+  name: busybox-allowed-ns
+  namespace: ns-a
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    args: ["sleep", "3600"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    tag: allowed-all
+  name: busybox-allowed-all
+  namespace: ns-a
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    args: ["sleep", "3600"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    tag: allowed-all
+  name: busybox-allowed-all
+  namespace: ns-b
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    args: ["sleep", "3600"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never

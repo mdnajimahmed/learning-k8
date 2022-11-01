@@ -1,0 +1,62 @@
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np1
+  namespace: ns014cd
+spec:
+  podSelector: {} 
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - podSelector:
+            matchLabels:
+              tag: allowed
+        namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: 10oap3
+      - podSelector:
+            matchLabels:
+              tag: whitelisted
+      ports:
+      - protocol: TCP
+        port: 80
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 172.217.26.78/32 # this should be the ip of the service
+        - ipBlock:
+            cidr: 8.8.8.8/32 # this should be the ip of the service       
+      ports:
+      - protocol: UDP
+        port: 53
+      - protocol: TCP
+        port: 53
+      - protocol: TCP
+        port: 443
+      
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np2
+  namespace: ns014cd
+spec:
+  podSelector:
+    matchLabels:
+      tag: abc456
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: plq-2
+          podSelector:
+            matchLabels:
+              check: itson
+        - podSelector:
+            matchLabels:
+              tag: pqr123

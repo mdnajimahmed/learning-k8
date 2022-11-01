@@ -1,0 +1,3 @@
+getns(){kubectl config view | grep 'namespace'}
+setns(){kubectl config set-context --current --namespace="$1"}
+
