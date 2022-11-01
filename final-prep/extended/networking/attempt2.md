@@ -55,3 +55,9 @@ busybox-allowed-ns    1/1     Running   0          60s   10.244.205.215   miniku
 contains two elements in the from array, and allows connections from Pods in the local Namespace with the label role=client, or from any Pod in any namespace with the label user=alice
     ```
     But the experiment shows if we do not mention any namespace it only allows the default namespace.
+
+# Attept 03, test 01:
+- Target ip : `10.244.205.229`
+- from ns-a `kubectl run tmp --image=busybox --rm -it --restart=Never --labels=tag=allowed-all -- wget -O- 10.244.205.229 -T 2` works - `same namespace`
+- from ns-b `kubectl run tmp --image=busybox --rm -it --restart=Never --labels=tag=allowed-all -- wget -O- 10.244.205.229 -T 2` does not work.
+- *More confirmation that when we don't mention any rule, it takes the self namespace*
