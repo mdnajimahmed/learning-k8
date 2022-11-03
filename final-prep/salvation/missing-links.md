@@ -17,3 +17,4 @@ setns(){kubectl config set-context --current --namespace="$1"}
         - n : no dns lookup
         - z : makes nc not receive any data from the server
         - w : wait timeout
+- it takes some time better to use `kubectl get ingress -w` vvi
