@@ -11,53 +11,6 @@ kind: Namespace
 metadata:
   name: ns-b
 ---
-# apiVersion: networking.k8s.io/v1
-# kind: NetworkPolicy
-# metadata:
-#   name: np1
-#   namespace: ns-a
-# spec:
-#   podSelector:
-#     matchLabels:
-#       tag: target
-#   policyTypes:
-#     - Ingress
-#   ingress:
-#     - from:
-#         - namespaceSelector:
-#             matchLabels:
-#               kubernetes.io/metadata.name: ns-b
-#           podSelector:
-#             matchLabels:
-#               tag: allowed-ns
-#         - podSelector:
-#             matchLabels:
-#               tag: allowed-all
----
-# apiVersion: networking.k8s.io/v1
-# kind: NetworkPolicy
-# metadata:
-#   name: np1
-#   namespace: ns-a
-# spec:
-#   podSelector:
-#     matchLabels:
-#       tag: target
-#   policyTypes:
-#     - Ingress
-#   ingress:
-#     - from:
-#         - namespaceSelector:
-#             matchLabels:
-#               kubernetes.io/metadata.name: ns-b
-#           podSelector:
-#             matchLabels:
-#               tag: allowed-ns
-#     - from: 
-#         - podSelector:
-#             matchLabels:
-#               tag: allowed-all
----
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -70,11 +23,20 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    - from: 
-        - podSelector:
+    - from: # use one rule in each from, use the array of the from key for a single rule. if you have more than one rule use a different from
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ns-b
+          podSelector:
+            matchLabels:
+              tag: allowed-ns
+    - from:
+        - namespaceSelector: {}
+          podSelector:
             matchLabels:
               tag: allowed-all
 ---
+
 apiVersion: v1
 kind: Pod
 metadata:
