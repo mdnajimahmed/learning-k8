@@ -30,3 +30,6 @@
 - kubectl get pods --namespace kube-system | grep metrics-server # Verify that 'metrics-server' pod is running
 
 - minikube addons enable ingress
+- minikube addons enable ingress-dns
+- minikube tunnel
+- https://stackoverflow.com/questions/58561682/minikube-with-ingress-example-not-working

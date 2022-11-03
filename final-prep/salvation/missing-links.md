@@ -18,3 +18,5 @@ setns(){kubectl config set-context --current --namespace="$1"}
         - z : makes nc not receive any data from the server
         - w : wait timeout
 - it takes some time better to use `kubectl get ingress -w` vvi
+- kubectl create svc clusterip myapp --tcp=80:80
+- kubectl create svc nodeport test --tcp=80:3000 # creates a nodeport servcie with port=80, target port 3000, nodeport autoassigned, --node-port to explictely assign node port
