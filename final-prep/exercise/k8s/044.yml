@@ -1,0 +1,8 @@
+apiVersion: "stable.example.com/v1" # group name from the CRD and the version defined.
+kind: Operator
+metadata:
+  name: mycrd # can be anything, available for all K8s resource.
+spec:
+  name: najim
+  email: najim.ju@gmail.com
+  age: 34
