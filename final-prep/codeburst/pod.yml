@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: bash
+  name: bash
+spec:
+  containers:
+  - args:
+    - sleep
+    - "3600"
+    image: bash
+    name: bash
+    envFrom:
+      - configMapRef:
+          name: drinks
+    volumeMounts:
+    - name: foo
+      mountPath: "/tmp/secret1"
+      readOnly: true
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  volumes:
+  - name: foo
+    secret:
+      secretName: secret1
+status: {}

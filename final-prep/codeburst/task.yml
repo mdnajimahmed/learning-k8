@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nginx
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: nginx
+    spec:
+      volumes:
+      - name: logs
+        emptyDir: {}
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+        volumeMounts:
+          - name: logs
+            mountPath: /var/log/nginx
+      - image: bash
+        name: sc
+        resources: {}
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do cat /thelogs/access.log; sleep 10;done"]
+        volumeMounts:
+          - name: logs
+            mountPath: /thelogs
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  ports:
+    - port: 80
+  selector:
+    run: nginx
+  type: ClusterIP
+status:
+  loadBalancer: {}

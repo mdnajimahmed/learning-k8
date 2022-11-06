@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: apinetpol
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: api
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+      - podSelector:
+            matchLabels:
+              app: nginx
+      ports:
+        - protocol: TCP
+          port: 3333
+  egress:
+    - to:
+      - ipBlock:
+          cidr: 142.250.199.14/32
+      ports:
+        - protocol: TCP
+          port: 443
+    - to:
+      ports:
+        - port: 53
+          protocol: TCP
+        - port: 53
+          protocol: UDP

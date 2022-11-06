@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: null
+  name: mycj
+spec:
+  successfulJobsHistoryLimit: 4
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: mycj
+    spec:
+      completions: 2
+      parallelism: 2
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          volumes:
+            - name: tv
+              persistentVolumeClaim:
+                claimName: mypvc
+          containers:
+          - command:
+            - sh
+            - -c
+            - echo $HOSTNAME > /tmp/vol/storage
+            image: busybox
+            name: mycj
+            resources: {}
+            volumeMounts:
+              - mountPath: "/tmp/vol/"
+                name: tv
+          restartPolicy: OnFailure
+  schedule: '*/1 * * * *'
+status: {}

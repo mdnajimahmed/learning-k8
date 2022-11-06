@@ -1,0 +1,4 @@
+NAME                    READY   STATUS    RESTARTS   AGE   LABELS
+nginx-8f458dc5b-2dsm2   1/1     Running   0          49s   app=nginx,pod-template-hash=8f458dc5b
+nginx-8f458dc5b-qlxq5   1/1     Running   0          49s   app=nginx,pod-template-hash=8f458dc5b
+nginx-8f458dc5b-qnpwj   1/1     Running   0          49s   app=nginx,pod-template-hash=8f458dc5b

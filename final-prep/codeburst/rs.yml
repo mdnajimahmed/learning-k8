@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: pod-calc
+  labels:
+    tag: nodown
+spec:
+  # modify replicas according to your case
+  replicas: 1
+  selector:
+    matchLabels:
+      tag: nodown
+  template:
+    metadata:
+      labels:
+        tag: nodown
+    spec:
+      containers:
+        - command:
+          - sh
+          - -c
+          - echo "important calculation"; sleep 1d
+          image: nginx
+          name: pod-calc
