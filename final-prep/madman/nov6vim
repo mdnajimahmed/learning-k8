@@ -1,0 +1,10 @@
+syntax enable
+set clipboard=unnamed
+filetype plugin indent on
+set autoindent smartindent
+set expandtab
+set tabstop=2 softtabstop=2 shiftwidth=2
+set number ruler
+
+tmp() { k run tmp --restart=Never --rm --stdin -it $1 -- sh; }
+rc() { k run tmp --restart=Never --rm --stdin -it --image=busybox --env=XXX="$1" -- sh -c 'wget -O- "$XXX" -T 2'; }
