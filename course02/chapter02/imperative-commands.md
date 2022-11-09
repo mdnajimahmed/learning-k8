@@ -6,7 +6,7 @@ Use imperative commands of k8s for this lab, no file.
 - deploy a pod named redis-pos using the redis image:alpine and label tier=db
     - kubectl run redis-prod --image=redis:alpine --labels=tier=db,app=practice
 - create a service called redis-service to expose the redis pod in port 6379
-    - kubectl expose pod redis-prod --name redis-service --port 679 --target-port=6379
+    - kubectl expose pod redis-prod --name redis-service --port 6379 --target-port=6379
 - create a deployment with nginx image
     - kubectl create deployment nginx-deployment --image=nginx
     - kubectl scale deployment nginx-deployment replicas=3

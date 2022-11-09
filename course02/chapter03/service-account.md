@@ -11,4 +11,5 @@
     - kubectl exec healthy-with-secret-6f4bd969f6-j5gqf -- ls /var/run/secrets/kubernetes.io/serviceaccount
     - kubectl exec nginx-service-account-01 -- cat /var/run/secrets/kubernetes.io/serviceaccount/token
     - kubectl describe secret my-first-service-account-token | grep '^token' 
-    - ** Not matching, could not use custom service account in a pod! :( **
+    <!-- - ** Not matching, could not use custom service account in a pod! :( ** -->
+    - It works, take the token and use jwt.io and you will see the difference.

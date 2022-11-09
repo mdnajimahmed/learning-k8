@@ -1,0 +1,12 @@
+- kubectl expose deployment result-app --type=NodePort --name=result-app-service
+- kubectl expose pod redis-prod --name redis-service --port 6379 --target-port=6379
+- kubectl run httpd --image=httpd:alpine --port=80 --expose --dry-run=client -o yaml > cluster-ip-httpd.yaml
+- kubectl taint nodes node1 app=blue:NoSchedule
+- kubectl taint nodes node1 app=blue:NoSchedule-
+- kubectl create svc clusterip myapp --tcp=80:80
+- kubectl create svc nodeport test --tcp=80:3000 # creates a nodeport servcie with port=80, target port 3000, nodeport autoassigned, --node-port to explictely assign node port
+- k set env pod nginx-c7f6f4dc6-9m4dr  --list
+- using kubectl delete jobs/oldjob --cascade=orphan
+- kubectl set resources deployment dp -c=nginx --limits=cpu=200m,memory=512Mi
+- `progressDeadlineSeconds` is the way to controll time limit of deployment. [VVI], if there is a time related question, search the doc with `time,seconds` its hard to remember all the control parameters.
+- kubectl get events --sort-by={.lastTimestamp}
