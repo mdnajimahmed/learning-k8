@@ -5,9 +5,3 @@ set autoindent smartindent
 set expandtab
 set tabstop=2 softtabstop=2 shiftwidth=2
 set number ruler
-
-
-mnemonics: scitr -> think about `science training` -> scitr 
-mnemonics: syn-clip-ind-tab-ru ->
-mnemonics:  synclip , india , tabruler
-
