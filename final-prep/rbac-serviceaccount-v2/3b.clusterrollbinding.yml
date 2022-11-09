@@ -1,0 +1,20 @@
+# This works
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: serviceaccount-service-rolebinding
+  namespace: default ### VVI , the rolebiding has to be created in the default namespace    ->>>>>>>> (1)
+subjects:
+- kind: ServiceAccount #                                                                    ->>>>>>>> (2)
+  name: api-call 
+  namespace: sapractice 
+roleRef:
+  kind: ClusterRole
+  name: list-services-clusterrole
+  apiGroup: rbac.authorization.k8s.io
+
+
+# Here in this file, I am saying 
+# (1) within namespace default
+# (2) Give service account `api-call` from namespace `sapractice` (kind: ServiceAccount,name: api-call ,namespace: sapractice) assign role list-services-clusterrole on api group rbac.authorization.k8s.io
+# Simply, it means api-call service account has list-services-clusterrole within namespace: default, so if the caller has service account api-call , it can consume resource from the default namespace. 

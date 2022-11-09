@@ -2,24 +2,33 @@ apiVersion: v1
 kind: Namespace
 metadata:
   creationTimestamp: null
-  name: t23
+  name: sapractice
 --- 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: list-services-clusterrole
+rules:
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["list"]
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  creationTimestamp: null
   name: api-call
-  namespace: t23
---- 
+  namespace: sapractice
+automountServiceAccountToken: true
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: serviceaccount-service-rolebinding
-  # namespace should be explicitley mentioned here.
+  namespace: default 
 subjects:
-- kind: ServiceAccount
-  name: api-call
-  namespace: t23
+- kind: ServiceAccount 
+  name: api-call 
+  namespace: sapractice 
 roleRef:
   kind: ClusterRole
   name: list-services-clusterrole
@@ -28,12 +37,11 @@ roleRef:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: service-list
-  namespace: t23
+  name: service-list-v3-final
+  namespace: sapractice
 spec:
   serviceAccountName: api-call
   containers:
   - name: service-list
     image: alpine/curl:3.14
     command: ['sh', '-c', 'while true; do curl -s -k -m 5 -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" https://kubernetes.default.svc.cluster.local/api/v1/namespaces/default/services; sleep 10; done']
---- 

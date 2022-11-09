@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: serviceaccount-service-rolebinding
+  namespace: sapractice # This is wrong because the API in 4.pod.yaml is calling the default namespaces service list. hence it should be default.
+subjects:
+- kind: ServiceAccount
+  name: api-call
+  namespace: sapractice
+roleRef:
+  kind: ClusterRole
+  name: list-services-clusterrole
+  apiGroup: rbac.authorization.k8s.io
