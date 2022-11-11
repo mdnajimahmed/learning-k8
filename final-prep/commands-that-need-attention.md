@@ -10,3 +10,6 @@
 - kubectl set resources deployment dp -c=nginx --limits=cpu=200m,memory=512Mi
 - `progressDeadlineSeconds` is the way to controll time limit of deployment. [VVI], if there is a time related question, search the doc with `time,seconds` its hard to remember all the control parameters.
 - kubectl get events --sort-by={.lastTimestamp}
+- k create rolebinding myrolebinding --clusterrole=list-svc --serviceaccount=t23:api-call -n default
+- k create clusterrole list-svc --resource=service --verb=list
+- *play with security context a bit more*
