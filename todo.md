@@ -7,4 +7,6 @@
     - Storage Class
 - Pod placement.
     - .spec.nodeName - to exactly say which pod to select.
+    - .spec.nodeName.nodeSelector - to use label
+
 - annotation.

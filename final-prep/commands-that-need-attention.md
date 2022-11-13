@@ -13,3 +13,7 @@
 - k create rolebinding myrolebinding --clusterrole=list-svc --serviceaccount=t23:api-call -n default
 - k create clusterrole list-svc --resource=service --verb=list
 - *play with security context a bit more*
+- kubectl -n mynamespace create quota myrq --hard=cpu=1,memory=1G,pods=2 
+- kubectl create quota my-quota --hard=cpu=1,memory=1G,pods=2,services=3,replicationcontrollers=2,resourcequotas=1,secrets=5,persistentvolumeclaims=10
+- k get pod pod1 -o yaml | yq .spec 
+- k rollout history deploy metrics-server -n kube-system --revision=1
