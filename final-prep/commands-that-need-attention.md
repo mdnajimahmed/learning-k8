@@ -17,3 +17,4 @@
 - kubectl create quota my-quota --hard=cpu=1,memory=1G,pods=2,services=3,replicationcontrollers=2,resourcequotas=1,secrets=5,persistentvolumeclaims=10
 - k get pod pod1 -o yaml | yq .spec 
 - k rollout history deploy metrics-server -n kube-system --revision=1
+- Service earth-3cc-web doesn't have endpoints. This could be a selector/label misconfiguration or the endpoints are actually not available/ready.
